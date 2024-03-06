@@ -15,13 +15,15 @@ const (
 )
 
 var testQueries *Queries
+var testDB *sql.DB
 
 func TestMain(m *testing.M) {
-	conn, err := sql.Open(dbDrive, dBSource)
+	var err error
+	testDB, err = sql.Open(dbDrive, dBSource)
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
 
-	testQueries = New(conn)
+	testQueries = New(testDB)
 	os.Exit(m.Run())
 }
